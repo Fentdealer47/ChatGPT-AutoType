@@ -16,7 +16,7 @@ wpm = 60  # typing speed in words per minute (adjust based on your preference) r
 
 def get_openai_response(prompt, model="gpt-4o-mini"):
     """
-    talks to openai and gets a response with adjusted grammar accuracy
+    talks to openai and gets a response with instructions to set the grammar accuracy
     """
     # adjust the prompt to instruct OpenAI on the level of grammar to use
     prompt_with_grammar_instructions = f"Please respond with {grammarAccuracy}% grammatical accuracy, meaning the response should have some mistakes and not be perfectly structured.\n\n{prompt}"
@@ -46,7 +46,7 @@ def simulate_typing(text):
             time.sleep(pause_duration)
 
         # introduce small grammar mistakes based on grammarAccuracy
-        if random.randint(1, 100) > grammarAccuracy:  # lower accuracy = more mistakes
+        if random.randint(1, 100) > grammarAccuracy:  # lower accuracy = more mistakes (need to fix it making mistakes to much)
             if char.isalpha():  # only make mistakes on letters
                 mistake_char = random.choice("abcdefghijklmnopqrstuvwxyz")
                 keyboard.type(mistake_char)
@@ -66,6 +66,7 @@ def main():
     print("\nthinking...\n")
     response = get_openai_response(user_input)
     print("typing response into active window...")
+    print("you have 2 seconds to go onto your preffered editor!")
     time.sleep(2)  # gives you time to switch to the google doc
     simulate_typing(response)
 
